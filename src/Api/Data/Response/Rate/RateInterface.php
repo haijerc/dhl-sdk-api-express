@@ -5,6 +5,7 @@
 namespace Dhl\Express\Api\Data\Response\Rate;
 
 use DateTime;
+use Dhl\Express\Webservice\Soap\Type\RateResponse\Provider\Service\Charges\Charge;
 
 /**
  * Rate Response Item Interface.
@@ -58,4 +59,9 @@ interface RateInterface
 	 * @return DateTime|null
 	 */
 	public function getCutoffTime();
+
+	/**
+	 * @return Charge[]
+	 */
+	public function getAppliedCharges();
 }

@@ -6,6 +6,7 @@ namespace Dhl\Express\Model\Response\Rate;
 
 use DateTime;
 use Dhl\Express\Api\Data\Response\Rate\RateInterface;
+use Dhl\Express\Webservice\Soap\Type\RateResponse\Provider\Service\Charges\Charge;
 
 /**
  * Rate response item.
@@ -58,21 +59,28 @@ class Rate implements RateInterface
 	 */
 	private $cutoffTime;
 
-    /**
-     * Rate constructor.
-     *
-     * @param string $serviceCode  The service code
-     * @param string $label        The label
-     * @param float  $amount       The amount
-     * @param string $currencyCode The currency code
-     */
-    public function __construct($serviceCode, $label, $amount, $currencyCode)
-    {
-        $this->serviceCode  = $serviceCode;
-        $this->label        = $label;
-        $this->amount       = $amount;
-        $this->currencyCode = $currencyCode;
-    }
+	/**
+	 * @var Charge[]
+	 */
+	private $appliedCharges;
+
+	/**
+	 * Rate constructor.
+	 *
+	 * @param string   $serviceCode    The service code
+	 * @param string   $label          The label
+	 * @param float    $amount         The amount
+	 * @param string   $currencyCode   The currency code
+	 * @param Charge[] $appliedCharges Applied charges
+	 */
+	public function __construct($serviceCode, $label, $amount, $currencyCode, $appliedCharges)
+	{
+		$this->serviceCode      = $serviceCode;
+		$this->label            = $label;
+		$this->amount           = $amount;
+		$this->currencyCode     = $currencyCode;
+		$this->appliedCharges   = $appliedCharges;
+	}
 
     public function getServiceCode()
     {
@@ -102,6 +110,14 @@ class Rate implements RateInterface
 	public function getCutoffTime()
 	{
 		return $this->cutoffTime;
+	}
+
+	/**
+	 * @return Charge[]
+	 */
+	public function getAppliedCharges()
+	{
+		return $this->appliedCharges;
 	}
 
     /**
