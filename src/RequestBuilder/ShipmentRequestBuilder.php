@@ -31,8 +31,8 @@ class ShipmentRequestBuilder implements ShipmentRequestBuilderInterface
 
     public function __construct()
     {
-    	$this->data['specialPickupInstructions'] = '';
-    	$this->data['paperlessDocument'] = '';
+        $this->data['specialPickupInstructions'] = '';
+        $this->data['paperlessDocument'] = '';
     }
 
 	/**
@@ -230,92 +230,92 @@ class ShipmentRequestBuilder implements ShipmentRequestBuilderInterface
 
     public function setInsurance($insuranceValue, $insuranceCurrency, $insuranceType = '')
     {
-	    $this->data['insurance'] = [
-		    'value'        => $insuranceValue,
-		    'currencyType' => $insuranceCurrency,
-		    'type'         => $insuranceType,
-	    ];
+        $this->data['insurance'] = [
+            'value'        => $insuranceValue,
+            'currencyType' => $insuranceCurrency,
+            'type'         => $insuranceType,
+        ];
 
         return $this;
     }
 
-	/**
-	 * @param $specialInstructions
-	 *
-	 * @return ShipmentRequestBuilder
-	 */
-	public function setSpecialPickupInstructions($specialInstructions)
-	{
-		$this->data['specialPickupInstructions'] = $specialInstructions;
+    /**
+     * @param $specialInstructions
+     *
+     * @return ShipmentRequestBuilder
+     */
+    public function setSpecialPickupInstructions($specialInstructions)
+    {
+        $this->data['specialPickupInstructions'] = $specialInstructions;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * @param $encodedString
-	 *
-	 * @return ShipmentRequestBuilder
-	 */
-	public function setPaperlessBase64EncodedString($encodedString)
-	{
-		$this->data['paperlessDocument'] = $encodedString;
+    /**
+     * @param $encodedString
+     *
+     * @return ShipmentRequestBuilder
+     */
+    public function setPaperlessBase64EncodedString($encodedString)
+    {
+        $this->data['paperlessDocument'] = $encodedString;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function setShipper(
-		$countryCode,
-		$postalCode,
-		$city,
-		array $streetLines,
-		$name,
-		$company,
-		$phone,
-		$email = null,
-		$stateOrProvince = null
-	)
-	{
-		$this->data['shipper'] = [
-			'countryCode'     => $countryCode,
-			'postalCode'      => $postalCode,
-			'city'            => $city,
-			'streetLines'     => $streetLines,
-			'name'            => $name,
-			'company'         => $company,
-			'phone'           => $phone,
-			'email'           => $email,
-			'stateOrProvince' => $stateOrProvince,
-		];
+    public function setShipper(
+        $countryCode,
+        $postalCode,
+        $city,
+        array $streetLines,
+        $name,
+        $company,
+        $phone,
+        $email = null,
+        $stateOrProvince = null
+    )
+    {
+        $this->data['shipper'] = [
+            'countryCode'     => $countryCode,
+            'postalCode'      => $postalCode,
+            'city'            => $city,
+            'streetLines'     => $streetLines,
+            'name'            => $name,
+            'company'         => $company,
+            'phone'           => $phone,
+            'email'           => $email,
+            'stateOrProvince' => $stateOrProvince,
+        ];
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function setRecipient(
-		$countryCode,
-		$postalCode,
-		$city,
-		array $streetLines,
-		$name,
-		$company,
-		$phone,
-		$email = null,
-		$stateOrProvince = null
-	)
-	{
-		$this->data['recipient'] = [
-			'countryCode'     => $countryCode,
-			'postalCode'      => $postalCode,
-			'city'            => $city,
-			'streetLines'     => $streetLines,
-			'name'            => $name,
-			'company'         => $company,
-			'phone'           => $phone,
-			'email'           => $email,
-			'stateOrProvince' => $stateOrProvince,
-		];
+    public function setRecipient(
+        $countryCode,
+        $postalCode,
+        $city,
+        array $streetLines,
+        $name,
+        $company,
+        $phone,
+        $email = null,
+        $stateOrProvince = null
+    )
+    {
+        $this->data['recipient'] = [
+            'countryCode'     => $countryCode,
+            'postalCode'      => $postalCode,
+            'city'            => $city,
+            'streetLines'     => $streetLines,
+            'name'            => $name,
+            'company'         => $company,
+            'phone'           => $phone,
+            'email'           => $email,
+            'stateOrProvince' => $stateOrProvince,
+        ];
 
-		return $this;
-	}
+        return $this;
+    }
 
     public function addPackage(
         $sequenceNumber,
@@ -367,8 +367,8 @@ class ShipmentRequestBuilder implements ShipmentRequestBuilderInterface
             $this->data['description'],
             $this->data['customsValue'],
             $this->data['serviceType'],
-	        $this->data['specialPickupInstructions'],
-	        $this->data['paperlessDocument']
+            $this->data['specialPickupInstructions'],
+            $this->data['paperlessDocument']
         );
 
         // Build shipper
@@ -381,7 +381,7 @@ class ShipmentRequestBuilder implements ShipmentRequestBuilderInterface
             $this->data['shipper']['company'],
             $this->data['shipper']['phone'],
             $this->data['shipper']['email'],
-	        $this->data['shipper']['stateOrProvince']
+            $this->data['shipper']['stateOrProvince']
         );
 
         // Build recipient
@@ -425,7 +425,7 @@ class ShipmentRequestBuilder implements ShipmentRequestBuilderInterface
             $request->setBillingAccountNumber($this->data['billingAccountNumber']);
         }
 
-        // Build insurance
+ // Build insurance
         if (isset($this->data['insurance']) && \is_array($this->data['insurance'])) {
             $insurance = new Insurance(
                 $this->data['insurance']['value'],

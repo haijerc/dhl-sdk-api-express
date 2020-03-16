@@ -161,28 +161,28 @@ class ShipmentInfo
     private $PaperlessTradeImage;
 
 	/**
-	 * This node details special pickup instructions you may
-	 * wish to send to the DHL Courier
-	 * 
-	 * @var null|SpecialPickupInstruction
-	 */
+     * This node details special pickup instructions you may
+     * wish to send to the DHL Courier
+     *
+     * @var null|SpecialPickupInstruction
+     */
     private $SpecialPickupInstructions;
 
 	/**
-	 * Constructor.
-	 *
-	 * @param string $dropOffType               The drop off type
-	 * @param string $serviceType               The service type
-	 * @param string $currencyCode              The currency code
-	 * @param string $unitOfMeasurement         The unit of measurement
-	 */
+     * Constructor.
+     *
+     * @param string $dropOffType               The drop off type
+     * @param string $serviceType               The service type
+     * @param string $currencyCode              The currency code
+     * @param string $unitOfMeasurement         The unit of measurement
+     */
     public function __construct($dropOffType, $serviceType, $currencyCode, $unitOfMeasurement)
     {
-	    $this
-		    ->setDropOffType($dropOffType)
-		    ->setServiceType($serviceType)
-		    ->setCurrency($currencyCode)
-		    ->setUnitOfMeasurement($unitOfMeasurement);
+        $this
+            ->setDropOffType($dropOffType)
+            ->setServiceType($serviceType)
+            ->setCurrency($currencyCode)
+            ->setUnitOfMeasurement($unitOfMeasurement);
     }
 
     /**
@@ -558,16 +558,16 @@ class ShipmentInfo
     }
 
 	/**
-	 * @param string|null $specialPickupInstructions
-	 *
-	 * @return self
-	 */
-	public function setSpecialPickupInstructions($specialPickupInstructions)
-	{
-		$this->SpecialPickupInstructions = new SpecialPickupInstruction($specialPickupInstructions);
+     * @param string|null $specialPickupInstructions
+     *
+     * @return self
+     */
+    public function setSpecialPickupInstructions($specialPickupInstructions)
+    {
+        $this->SpecialPickupInstructions = new SpecialPickupInstruction($specialPickupInstructions);
 
-		return $this;
-	}
+        return $this;
+    }
 
 	/**
 	 * @return SpecialPickupInstruction|null

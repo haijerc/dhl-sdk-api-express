@@ -5,7 +5,6 @@
 
 namespace Dhl\Express\RequestBuilder;
 
-use InvalidArgumentException;
 use Dhl\Express\Api\RateRequestBuilderInterface;
 use Dhl\Express\Model\RateRequest;
 use Dhl\Express\Model\Request\Insurance;
@@ -13,6 +12,7 @@ use Dhl\Express\Model\Request\Rate\Package;
 use Dhl\Express\Model\Request\Rate\RecipientAddress;
 use Dhl\Express\Model\Request\Rate\ShipmentDetails;
 use Dhl\Express\Model\Request\Rate\ShipperAddress;
+use InvalidArgumentException;
 
 /**
  * Rate Request Builder.
@@ -219,15 +219,15 @@ class RateRequestBuilder implements RateRequestBuilderInterface
     }
 
 	public function setInsurance($insuranceValue, $insuranceCurrency, $insuranceType = '')
-	{
-		$this->data['insurance'] = [
-			'value'        => $insuranceValue,
-			'currencyType' => $insuranceCurrency,
-			'type'         => $insuranceType,
-		];
+    {
+        $this->data['insurance'] = [
+            'value'        => $insuranceValue,
+            'currencyType' => $insuranceCurrency,
+            'type'         => $insuranceType,
+        ];
 
-		return $this;
-	}
+        return $this;
+    }
 
     public function setIsValueAddedServicesRequested($requestValueAddedServices)
     {
@@ -288,7 +288,7 @@ class RateRequestBuilder implements RateRequestBuilderInterface
             $insurance = new Insurance(
                 $this->data['insurance']['value'],
                 $this->data['insurance']['currencyType'],
-	            $this->data['insurance']['type']
+                $this->data['insurance']['type']
             );
         }
 

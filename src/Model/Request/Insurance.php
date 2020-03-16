@@ -45,7 +45,7 @@ class Insurance implements InsuranceInterface
     {
         $this->value        = $value;
         $this->currencyCode = $currencyCode;
-	    $this->type         = empty($type) ? ServiceType::TYPE_INSURANCE : $type;
+        $this->type         = empty($type) ? ServiceType::TYPE_INSURANCE : $type;
     }
 
     public function getValue()

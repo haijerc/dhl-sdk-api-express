@@ -4,7 +4,6 @@
  */
 namespace Dhl\Express\Api\Data\Response\Rate;
 
-use DateTime;
 use Dhl\Express\Webservice\Soap\Type\RateResponse\Provider\Service\Charges\Charge;
 
 /**
@@ -49,14 +48,14 @@ interface RateInterface
     /**
      * Returns the delivery date/time.
      *
-     * @return DateTime|null
+     * @return \DateTime|null
      */
     public function getDeliveryTime();
 
 	/**
 	 * Returns the cutoff date/time.
 	 *
-	 * @return DateTime|null
+	 * @return \DateTime|null
 	 */
 	public function getCutoffTime();
 

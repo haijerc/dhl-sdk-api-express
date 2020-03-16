@@ -140,17 +140,17 @@ class ShipmentDetails implements ShipmentDetailsInterface
 	/**
 	 * ShipmentDetails constructor.
 	 *
-	 * @param bool $unscheduledPickup
-	 * @param string $termsOfTrade
-	 * @param string $contentType
+	 * @param bool      $unscheduledPickup
+	 * @param string    $termsOfTrade
+	 * @param string    $contentType
 	 * @param \DateTime $readyAtTimestamp
-	 * @param int $numberOfPieces
-	 * @param string $currencyCode
-	 * @param string $description
-	 * @param float $customsValue
-	 * @param string $serviceType
-	 * @param string $specialPickupInstructions
-	 * @param string $paperlessDocument
+	 * @param int       $numberOfPieces
+	 * @param string    $currencyCode
+	 * @param string    $description
+	 * @param float     $customsValue
+	 * @param string    $serviceType
+	 * @param string    $specialPickupInstructions
+	 * @param string    $paperlessDocument
 	 */
     public function __construct(
         $unscheduledPickup,
@@ -162,8 +162,8 @@ class ShipmentDetails implements ShipmentDetailsInterface
         $description,
         $customsValue,
         $serviceType,
-		$specialPickupInstructions,
-		$paperlessDocument
+        $specialPickupInstructions,
+        $paperlessDocument
     ) {
         $this->unscheduledPickup = $unscheduledPickup;
         $this->termsOfTrade = $termsOfTrade;
@@ -230,11 +230,11 @@ class ShipmentDetails implements ShipmentDetailsInterface
 
 	public function getSpecialShipmentInstructions()
 	{
-		return (string) $this->specialPickupInstructions;
+        return (string) $this->specialPickupInstructions;
 	}
 
 	public function getPaperlessEncodedStringDocument()
 	{
-		return (string) $this->paperlessDocument;
+        return (string) $this->paperlessDocument;
 	}
 }

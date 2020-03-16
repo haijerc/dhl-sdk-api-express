@@ -4,7 +4,6 @@
  */
 namespace Dhl\Express\Model\Response\Rate;
 
-use DateTime;
 use Dhl\Express\Api\Data\Response\Rate\RateInterface;
 use Dhl\Express\Webservice\Soap\Type\RateResponse\Provider\Service\Charges\Charge;
 
@@ -48,14 +47,14 @@ class Rate implements RateInterface
     /**
      * The delivery time.
      *
-     * @var DateTime|null
+     * @var \DateTime|null
      */
     private $deliveryTime;
 
 	/**
 	 * The cutoff time.
 	 *
-	 * @var DateTime|null
+	 * @var \DateTime|null
 	 */
 	private $cutoffTime;
 
@@ -109,7 +108,7 @@ class Rate implements RateInterface
 
 	public function getCutoffTime()
 	{
-		return $this->cutoffTime;
+        return $this->cutoffTime;
 	}
 
 	/**
@@ -123,11 +122,11 @@ class Rate implements RateInterface
     /**
      * Sets the delivery date/time.
      *
-     * @param DateTime $deliveryTime The delivery date/time
+     * @param \DateTime $deliveryTime The delivery date/time
      *
      * @return Rate
      */
-    public function setDeliveryTime(DateTime $deliveryTime)
+    public function setDeliveryTime(\DateTime $deliveryTime)
     {
         $this->deliveryTime = $deliveryTime;
         return $this;
@@ -136,14 +135,14 @@ class Rate implements RateInterface
 	/**
 	 * Sets the cutoff date/time.
 	 *
-	 * @param DateTime $cutoffTIme The cutoff date/time
+	 * @param \DateTime $cutoffTIme The cutoff date/time
 	 *
 	 * @return Rate
 	 */
-	public function setCutoffTime(DateTime $cutoffTIme)
+	public function setCutoffTime(\DateTime $cutoffTIme)
 	{
-		$this->cutoffTime = $cutoffTIme;
+        $this->cutoffTime = $cutoffTIme;
 
-		return $this;
+        return $this;
 	}
 }

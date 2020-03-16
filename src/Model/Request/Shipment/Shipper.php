@@ -108,7 +108,7 @@ class Shipper implements ShipperInterface
         $this->company = $company;
         $this->phone = $phone;
         $this->email = $email;
-	    $this->stateOrProvince = $stateOrProvince;
+        $this->stateOrProvince = $stateOrProvince;
     }
 
     public function getCountryCode()
@@ -153,6 +153,6 @@ class Shipper implements ShipperInterface
 
 	public function getStateOrProvince()
 	{
-		return (string) $this->stateOrProvince;
+        return (string) $this->stateOrProvince;
 	}
 }
