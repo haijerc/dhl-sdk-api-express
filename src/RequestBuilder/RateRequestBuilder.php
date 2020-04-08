@@ -5,7 +5,6 @@
 
 namespace Dhl\Express\RequestBuilder;
 
-use InvalidArgumentException;
 use Dhl\Express\Api\RateRequestBuilderInterface;
 use Dhl\Express\Model\RateRequest;
 use Dhl\Express\Model\Request\Insurance;
@@ -13,6 +12,7 @@ use Dhl\Express\Model\Request\Rate\Package;
 use Dhl\Express\Model\Request\Rate\RecipientAddress;
 use Dhl\Express\Model\Request\Rate\ShipmentDetails;
 use Dhl\Express\Model\Request\Rate\ShipperAddress;
+use InvalidArgumentException;
 
 /**
  * Rate Request Builder.
@@ -177,7 +177,7 @@ class RateRequestBuilder implements RateRequestBuilderInterface
 
         $this->data['packages'][] = [
             'sequenceNumber' => $sequenceNumber,
-            'weight' => $weightDetails['weight'],
+            'weight' => round($weightDetails['weight'], 3),
             'weightUOM' => $weightDetails['uom'],
             'length' => $dimensionsDetails['length'],
             'width' => $dimensionsDetails['width'],
@@ -218,12 +218,14 @@ class RateRequestBuilder implements RateRequestBuilderInterface
         return $this;
     }
 
-    public function setInsurance($insuranceValue, $insuranceCurrency)
+	public function setInsurance($insuranceValue, $insuranceCurrency, $insuranceType = '')
     {
         $this->data['insurance'] = [
-            'value' => $insuranceValue,
+            'value'        => $insuranceValue,
             'currencyType' => $insuranceCurrency,
+            'type'         => $insuranceType,
         ];
+
         return $this;
     }
 
@@ -285,7 +287,8 @@ class RateRequestBuilder implements RateRequestBuilderInterface
         if (array_key_exists('insurance', $this->data)) {
             $insurance = new Insurance(
                 $this->data['insurance']['value'],
-                $this->data['insurance']['currencyType']
+                $this->data['insurance']['currencyType'],
+                $this->data['insurance']['type']
             );
         }
 

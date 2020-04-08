@@ -83,8 +83,9 @@ class RateRequestMapper
         $requestedShipment->setNextBusinessDay($rateRequest->getShipmentDetails()->isNextBusinessDayIndicator());
 
         $specialServicesList = [];
-        if ($insurance = $rateRequest->getInsurance()) {
-            $insuranceService = new Service(SpecialServices\ServiceType::TYPE_INSURANCE);
+        if ($rateRequest->getInsurance()) {
+	        $insurance = $rateRequest->getInsurance();
+            $insuranceService = new Service($insurance->getType());
             $insuranceService->setServiceValue($insurance->getValue());
             $insuranceService->setCurrencyCode($insurance->getCurrencyCode());
             $specialServicesList[] = $insuranceService;

@@ -15,13 +15,14 @@ use Dhl\Express\Webservice\Soap\ValueInterface;
  */
 class ServiceType implements ValueInterface
 {
-    const NUMBER_OF_CHARS = 3;
+    const NUMBER_OF_CHARS = 2;
 
     /**
      * Available service types.
      */
-    /** @var string @TODO(nr) the code is actually II, but the API does not recognize it currently, therefore use INS */
-    const TYPE_INSURANCE = 'INS';
+    const TYPE_INSURANCE = 'II';
+    const TYPE_PAPERLESS = 'WY';
+    const TYPE_DOCUMENT_INSURANCE = 'IB';
 
     /**
      * The service type.
@@ -39,7 +40,7 @@ class ServiceType implements ValueInterface
     public function __construct($value)
     {
         if (\strlen($value) !== self::NUMBER_OF_CHARS) {
-            throw new \InvalidArgumentException('The argument must be a two letter service type');
+            throw new \InvalidArgumentException('The argument has to be '.self::NUMBER_OF_CHARS.' letters service type');
         }
 
         $this->value = $value;

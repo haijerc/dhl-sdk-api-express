@@ -67,6 +67,7 @@ class TrackingResponseMapper
                 $weight,
                 $estimatedDeliveryDate
             );
+
             $soapTrackingPieces = $soapTrackingItem->getPieces();
             $trackingPieces = [];
             if ($soapTrackingPieces !== null) {
@@ -74,11 +75,17 @@ class TrackingResponseMapper
                 $trackingPieces = $soapTrackingPieces->getPieceInfo()->getArrayOfPieceInfoItem();
             }
 
+            if (($shipmentInfo !== null) && ($shipmentInfo->getShipmentEvent() instanceof ShipmentEventCollection)) {
+                $shipmentEvents = $this->convertTrackEventItems($shipmentInfo->getShipmentEvent());
+            } else {
+                $shipmentEvents = [];
+            }
+
             $trackingInfos[] = new TrackingInfo(
                 $soapTrackingItem->getAWBNumber(),
                 $soapTrackingItem->getStatus()->getActionStatus(),
                 $shipmentDetails,
-                $shipmentInfo ? $this->convertTrackEventItems($shipmentInfo->getShipmentEvent()) : [],
+                $shipmentEvents,
                 $trackingPieces
             );
         }
@@ -92,7 +99,7 @@ class TrackingResponseMapper
         return new TrackingResponse(
             new Message(
                 $time,
-                $soapResponseContent->getResponse()->getServiceHeader()->getMessageTime()
+                $soapResponseContent->getResponse()->getServiceHeader()->getMessageReference()
             ),
             $trackingInfos
         );
@@ -102,13 +109,13 @@ class TrackingResponseMapper
      * @param null|ShipmentEventCollection $shipmentEvents
      * @return ShipmentEventInterface[]
      */
-    private function convertTrackEventItems(ShipmentEventCollection $shipmentEvents)
+    private function convertTrackEventItems($shipmentEvents)
     {
         $events = [];
 
-        if (!$shipmentEvents) {
-        	return $events;
-        }
+	    if (is_null($shipmentEvents)) {
+		    return $events;
+	    }
 
         foreach ($shipmentEvents->getArrayOfShipmentEventItem() as $shipmentEvent) {
             $events[] = new TrackingInfo\ShipmentEvent(

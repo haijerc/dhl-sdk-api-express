@@ -13,6 +13,7 @@ use Dhl\Express\Webservice\Soap\Type\Common\Billing;
 use Dhl\Express\Webservice\Soap\Type\Common\Packages\RequestedPackages\Dimensions;
 use Dhl\Express\Webservice\Soap\Type\Common\SpecialServices;
 use Dhl\Express\Webservice\Soap\Type\Common\SpecialServices\Service;
+use Dhl\Express\Webservice\Soap\Type\Common\SpecialServices\ServiceType;
 use Dhl\Express\Webservice\Soap\Type\Common\UnitOfMeasurement;
 use Dhl\Express\Webservice\Soap\Type\ShipmentRequest\DangerousGoods;
 use Dhl\Express\Webservice\Soap\Type\ShipmentRequest\DangerousGoods\Content;
@@ -59,6 +60,15 @@ class ShipmentRequestMapper
             $this->mapUOM($weightUOM, $dimensionsUOM)
         );
 
+	    if (!empty($request->getShipmentDetails()->getSpecialShipmentInstructions())) {
+		    $shipmentInfo->setSpecialPickupInstructions($request->getShipmentDetails()->getSpecialShipmentInstructions());
+	    }
+
+	    if (!empty($request->getShipmentDetails()->getPaperlessEncodedStringDocument())) {
+	    	$shipmentInfo->setPaperlessTradeEnabled(true);
+	    	$shipmentInfo->setPaperlessTradeImage($request->getShipmentDetails()->getPaperlessEncodedStringDocument());
+	    }
+
         // Create ship
         $ship = new Ship(
             new Ship\ContactInfo(
@@ -71,7 +81,8 @@ class ShipmentRequestMapper
                     $request->getShipper()->getStreetLines()[0],
                     $request->getShipper()->getCity(),
                     $request->getShipper()->getPostalCode(),
-                    $request->getShipper()->getCountryCode()
+                    $request->getShipper()->getCountryCode(),
+	                $request->getShipper()->getStateOrProvince()
                 )
             ),
             new Ship\ContactInfo(
@@ -84,7 +95,8 @@ class ShipmentRequestMapper
                     $request->getRecipient()->getStreetLines()[0],
                     $request->getRecipient()->getCity(),
                     $request->getRecipient()->getPostalCode(),
-                    $request->getRecipient()->getCountryCode()
+                    $request->getRecipient()->getCountryCode(),
+	                $request->getRecipient()->getStateOrProvince()
                 )
             )
         );
@@ -156,10 +168,15 @@ class ShipmentRequestMapper
 
         $specialServicesList = [];
         if ($insurance = $request->getInsurance()) {
-            $insuranceService = new Service(SpecialServices\ServiceType::TYPE_INSURANCE);
+            $insuranceService = new Service($insurance->getType());
             $insuranceService->setServiceValue($insurance->getValue());
             $insuranceService->setCurrencyCode($insurance->getCurrencyCode());
             $specialServicesList[] = $insuranceService;
+        }
+
+        if ($shipmentInfo->getPaperlessTradeEnabled()) {
+	        $paperlessService = new Service(ServiceType::TYPE_PAPERLESS);
+	        $specialServicesList[] = $paperlessService;
         }
 
         if (!empty($specialServicesList)) {

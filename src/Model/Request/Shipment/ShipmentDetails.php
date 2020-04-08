@@ -127,19 +127,31 @@ class ShipmentDetails implements ShipmentDetailsInterface
      */
     private $serviceType;
 
-    /**
-     * ShipmentDetails constructor.
-     *
-     * @param bool $unscheduledPickup
-     * @param string $termsOfTrade
-     * @param string $contentType
-     * @param \DateTime $readyAtTimestamp
-     * @param int $numberOfPieces
-     * @param string $currencyCode
-     * @param string $description
-     * @param float $customsValue
-     * @param string $serviceType
-     */
+	/**
+	 * @var string
+	 */
+	private $specialPickupInstructions;
+
+	/**
+	 * @var string
+	 */
+	private $paperlessDocument;
+
+	/**
+	 * ShipmentDetails constructor.
+	 *
+	 * @param bool      $unscheduledPickup
+	 * @param string    $termsOfTrade
+	 * @param string    $contentType
+	 * @param \DateTime $readyAtTimestamp
+	 * @param int       $numberOfPieces
+	 * @param string    $currencyCode
+	 * @param string    $description
+	 * @param float     $customsValue
+	 * @param string    $serviceType
+	 * @param string    $specialPickupInstructions
+	 * @param string    $paperlessDocument
+	 */
     public function __construct(
         $unscheduledPickup,
         $termsOfTrade,
@@ -149,7 +161,9 @@ class ShipmentDetails implements ShipmentDetailsInterface
         $currencyCode,
         $description,
         $customsValue,
-        $serviceType
+        $serviceType,
+        $specialPickupInstructions,
+        $paperlessDocument
     ) {
         $this->unscheduledPickup = $unscheduledPickup;
         $this->termsOfTrade = $termsOfTrade;
@@ -160,6 +174,8 @@ class ShipmentDetails implements ShipmentDetailsInterface
         $this->description = $description;
         $this->customsValue = $customsValue;
         $this->serviceType = $serviceType;
+        $this->specialPickupInstructions = $specialPickupInstructions;
+        $this->paperlessDocument = $paperlessDocument;
     }
 
     public function isUnscheduledPickup()
@@ -211,4 +227,14 @@ class ShipmentDetails implements ShipmentDetailsInterface
     {
         return (string) $this->serviceType;
     }
+
+	public function getSpecialShipmentInstructions()
+	{
+        return (string) $this->specialPickupInstructions;
+	}
+
+	public function getPaperlessEncodedStringDocument()
+	{
+        return (string) $this->paperlessDocument;
+	}
 }

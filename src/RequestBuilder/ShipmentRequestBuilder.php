@@ -29,7 +29,13 @@ class ShipmentRequestBuilder implements ShipmentRequestBuilderInterface
      */
     private $data = [];
 
-    /**
+    public function __construct()
+    {
+        $this->data['specialPickupInstructions'] = '';
+        $this->data['paperlessDocument'] = '';
+    }
+
+	/**
      * Normalizes the weight and unit of measurement to the unit of measurement KG (kilograms) or LB (Pound)
      * supported by the DHL express webservice.
      *
@@ -222,12 +228,37 @@ class ShipmentRequestBuilder implements ShipmentRequestBuilderInterface
         return $this;
     }
 
-    public function setInsurance($insuranceValue, $insuranceCurrency)
+    public function setInsurance($insuranceValue, $insuranceCurrency, $insuranceType = '')
     {
         $this->data['insurance'] = [
-            'value' => $insuranceValue,
+            'value'        => $insuranceValue,
             'currencyType' => $insuranceCurrency,
+            'type'         => $insuranceType,
         ];
+
+        return $this;
+    }
+
+    /**
+     * @param $specialInstructions
+     *
+     * @return ShipmentRequestBuilder
+     */
+    public function setSpecialPickupInstructions($specialInstructions)
+    {
+        $this->data['specialPickupInstructions'] = $specialInstructions;
+
+        return $this;
+    }
+
+    /**
+     * @param $encodedString
+     *
+     * @return ShipmentRequestBuilder
+     */
+    public function setPaperlessBase64EncodedString($encodedString)
+    {
+        $this->data['paperlessDocument'] = $encodedString;
 
         return $this;
     }
@@ -240,17 +271,20 @@ class ShipmentRequestBuilder implements ShipmentRequestBuilderInterface
         $name,
         $company,
         $phone,
-        $email = null
-    ) {
+        $email = null,
+        $stateOrProvince = null
+    )
+    {
         $this->data['shipper'] = [
-            'countryCode' => $countryCode,
-            'postalCode' => $postalCode,
-            'city' => $city,
-            'streetLines' => $streetLines,
-            'name' => $name,
-            'company' => $company,
-            'phone' => $phone,
-            'email' => $email
+            'countryCode'     => $countryCode,
+            'postalCode'      => $postalCode,
+            'city'            => $city,
+            'streetLines'     => $streetLines,
+            'name'            => $name,
+            'company'         => $company,
+            'phone'           => $phone,
+            'email'           => $email,
+            'stateOrProvince' => $stateOrProvince,
         ];
 
         return $this;
@@ -264,17 +298,20 @@ class ShipmentRequestBuilder implements ShipmentRequestBuilderInterface
         $name,
         $company,
         $phone,
-        $email = null
-    ) {
+        $email = null,
+        $stateOrProvince = null
+    )
+    {
         $this->data['recipient'] = [
-            'countryCode' => $countryCode,
-            'postalCode' => $postalCode,
-            'city' => $city,
-            'streetLines' => $streetLines,
-            'name' => $name,
-            'company' => $company,
-            'phone' => $phone,
-            'email' => $email,
+            'countryCode'     => $countryCode,
+            'postalCode'      => $postalCode,
+            'city'            => $city,
+            'streetLines'     => $streetLines,
+            'name'            => $name,
+            'company'         => $company,
+            'phone'           => $phone,
+            'email'           => $email,
+            'stateOrProvince' => $stateOrProvince,
         ];
 
         return $this;
@@ -295,7 +332,7 @@ class ShipmentRequestBuilder implements ShipmentRequestBuilderInterface
 
         $this->data['packages'][] = [
             'sequenceNumber' => $sequenceNumber,
-            'weight' => $weightDetails['weight'],
+            'weight' => round($weightDetails['weight'], 3),
             'weightUOM' => $weightDetails['uom'],
             'length' => $dimensionsDetails['length'],
             'width' => $dimensionsDetails['width'],
@@ -329,7 +366,9 @@ class ShipmentRequestBuilder implements ShipmentRequestBuilderInterface
             $this->data['currencyCode'],
             $this->data['description'],
             $this->data['customsValue'],
-            $this->data['serviceType']
+            $this->data['serviceType'],
+            $this->data['specialPickupInstructions'],
+            $this->data['paperlessDocument']
         );
 
         // Build shipper
@@ -341,7 +380,8 @@ class ShipmentRequestBuilder implements ShipmentRequestBuilderInterface
             $this->data['shipper']['name'],
             $this->data['shipper']['company'],
             $this->data['shipper']['phone'],
-            $this->data['shipper']['email']
+            $this->data['shipper']['email'],
+            $this->data['shipper']['stateOrProvince']
         );
 
         // Build recipient
@@ -353,7 +393,8 @@ class ShipmentRequestBuilder implements ShipmentRequestBuilderInterface
             $this->data['recipient']['name'],
             $this->data['recipient']['company'],
             $this->data['recipient']['phone'],
-            $this->data['recipient']['email']
+            $this->data['recipient']['email'],
+	        $this->data['recipient']['stateOrProvince']
         );
 
         // build packages
@@ -384,11 +425,12 @@ class ShipmentRequestBuilder implements ShipmentRequestBuilderInterface
             $request->setBillingAccountNumber($this->data['billingAccountNumber']);
         }
 
-        // Build insurance
+ // Build insurance
         if (isset($this->data['insurance']) && \is_array($this->data['insurance'])) {
             $insurance = new Insurance(
                 $this->data['insurance']['value'],
-                $this->data['insurance']['currencyType']
+                $this->data['insurance']['currencyType'],
+                $this->data['insurance']['type']
             );
 
             $request->setInsurance($insurance);

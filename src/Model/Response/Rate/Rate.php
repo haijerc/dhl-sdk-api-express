@@ -5,6 +5,7 @@
 namespace Dhl\Express\Model\Response\Rate;
 
 use Dhl\Express\Api\Data\Response\Rate\RateInterface;
+use Dhl\Express\Webservice\Soap\Type\RateResponse\Provider\Service\Charges\Charge;
 
 /**
  * Rate response item.
@@ -50,21 +51,35 @@ class Rate implements RateInterface
      */
     private $deliveryTime;
 
-    /**
-     * Rate constructor.
-     *
-     * @param string $serviceCode  The service code
-     * @param string $label        The label
-     * @param float  $amount       The amount
-     * @param string $currencyCode The currency code
-     */
-    public function __construct($serviceCode, $label, $amount, $currencyCode)
-    {
-        $this->serviceCode  = $serviceCode;
-        $this->label        = $label;
-        $this->amount       = $amount;
-        $this->currencyCode = $currencyCode;
-    }
+	/**
+	 * The cutoff time.
+	 *
+	 * @var \DateTime|null
+	 */
+	private $cutoffTime;
+
+	/**
+	 * @var Charge[]
+	 */
+	private $appliedCharges;
+
+	/**
+	 * Rate constructor.
+	 *
+	 * @param string   $serviceCode    The service code
+	 * @param string   $label          The label
+	 * @param float    $amount         The amount
+	 * @param string   $currencyCode   The currency code
+	 * @param Charge[] $appliedCharges Applied charges
+	 */
+	public function __construct($serviceCode, $label, $amount, $currencyCode, $appliedCharges)
+	{
+		$this->serviceCode      = $serviceCode;
+		$this->label            = $label;
+		$this->amount           = $amount;
+		$this->currencyCode     = $currencyCode;
+		$this->appliedCharges   = $appliedCharges;
+	}
 
     public function getServiceCode()
     {
@@ -91,6 +106,19 @@ class Rate implements RateInterface
         return $this->deliveryTime;
     }
 
+	public function getCutoffTime()
+	{
+        return $this->cutoffTime;
+	}
+
+	/**
+	 * @return Charge[]
+	 */
+	public function getAppliedCharges()
+	{
+		return $this->appliedCharges;
+	}
+
     /**
      * Sets the delivery date/time.
      *
@@ -103,4 +131,18 @@ class Rate implements RateInterface
         $this->deliveryTime = $deliveryTime;
         return $this;
     }
+
+	/**
+	 * Sets the cutoff date/time.
+	 *
+	 * @param \DateTime $cutoffTIme The cutoff date/time
+	 *
+	 * @return Rate
+	 */
+	public function setCutoffTime(\DateTime $cutoffTIme)
+	{
+        $this->cutoffTime = $cutoffTIme;
+
+        return $this;
+	}
 }

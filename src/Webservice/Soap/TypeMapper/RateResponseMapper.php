@@ -8,8 +8,7 @@ use Dhl\Express\Api\Data\RateResponseInterface;
 use Dhl\Express\Exception\RateRequestException;
 use Dhl\Express\Model\RateResponse;
 use Dhl\Express\Model\Response\Rate\Rate;
-use Dhl\Express\Webservice\Soap\Type\RateResponse\Provider;
-use Dhl\Express\Webservice\Soap\Type\RateResponse\Provider\Service\Charges;
+use Dhl\Express\Webservice\Soap\Type\RateResponse\Provider\Service\Charges\Charge;
 use Dhl\Express\Webservice\Soap\Type\SoapRateResponse;
 
 /**
@@ -32,7 +31,7 @@ class RateResponseMapper
     public function map(SoapRateResponse $rateResponse)
     {
         $rates = [];
-        /** @var Provider $provider */
+
         $provider = $rateResponse->getProvider();
         if ($provider !== null) {
             $notification = $provider->getNotification();
@@ -51,33 +50,34 @@ class RateResponseMapper
                     $charges = $service->getCharges();
 
                     foreach ($totals as $total) {
-                        $currencyType = $total->getType();
-                        $totalCharges = array_filter(
-                            $charges,
-                            function (Charges $charges) use ($currencyType) {
-                                return ($charges->getType() === $currencyType);
-                            }
-                        );
+	                    if(empty($charges)) {
+		                    continue;
+	                    }
+	                    
+	                    $totalCharges = array_filter(
+		                    $charges[0]->getCharge(),
+		                    function (Charge $charge) {
+			                    return ($charge->getChargeAmount() > 0);
+		                    }
+	                    );
 
                         if (empty($totalCharges)) {
                             continue;
                         }
 
-                        /** @var Charges[] $totalCharges */
-                        $chargeComponents = $totalCharges[0]->getCharge();
-                        if (!empty($chargeComponents)) {
-                            $label = $chargeComponents[0]->getChargeType();
-                        } else {
-                            $label = 'DHL Express';
-                        }
+                        $label = $totalCharges[0]->getChargeType();
 
                         $currencyCode = $total->getCurrency();
                         $cost = $total->getAmount();
 
-                        $rate = new Rate($serviceCode, $label, $cost, $currencyCode);
+                        $rate = new Rate($serviceCode, $label, $cost, $currencyCode, $totalCharges);
                         if ($service->getDeliveryTime() instanceof \DateTime) {
                             $rate->setDeliveryTime($service->getDeliveryTime());
                         }
+	                    if ($service->getCutoffTime() instanceof \DateTime) {
+		                    $rate->setCutoffTime($service->getCutoffTime());
+	                    }
+	                    
                         $rates[] = $rate;
                     }
                 }
