@@ -29,6 +29,11 @@ class RateRequestBuilder implements RateRequestBuilderInterface
      */
     private $data = [];
 
+	public function __construct()
+	{
+		$this->data['isDetailedPriceBreakdownRequested'] = false;
+	}
+
     /**
      * Normalizes the weight and unit of measurement to the unit of measurement KG (kilograms) or LB (Pound)
      * supported by the DHL express webservice.
@@ -241,6 +246,12 @@ class RateRequestBuilder implements RateRequestBuilderInterface
         return $this;
     }
 
+	public function setIsRequestedDetailedPriceBreakdown()
+	{
+		$this->data['isDetailedPriceBreakdownRequested'] = true;
+		return $this;
+	}
+
     public function build()
     {
         // build recipient address
@@ -265,7 +276,8 @@ class RateRequestBuilder implements RateRequestBuilderInterface
             $this->data['contentType'],
             $this->data['readyAtTimestamp'],
             $this->data['isValueAddedServicesRequested'],
-            $this->data['nextBusinessDayIndicator']
+            $this->data['nextBusinessDayIndicator'],
+            $this->data['isDetailedPriceBreakdownRequested']
         );
 
         // build packages

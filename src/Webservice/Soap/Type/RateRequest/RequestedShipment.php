@@ -152,6 +152,15 @@ class RequestedShipment
      */
     private $RequestValueAddedServices;
 
+	/**
+	 * This option is to receive a breakdown of charges including
+	 * taxes and discounts.
+	 * The default value is N, a high level breakdown is provided then.
+	 *
+	 * @var null|GetDetailedRateBreakdown
+	 */
+	private $GetDetailedRateBreakdown;
+
     /**
      * Constructor.
      *
@@ -501,4 +510,13 @@ class RequestedShipment
         $this->RequestValueAddedServices = new RequestValueAddedServices($requestValueAddedServices);
         return $this;
     }
+
+	/**
+	 * @param bool|string $GetDetailedRateBreakdown
+	 */
+	public function setGetDetailedRateBreakdown($GetDetailedRateBreakdown)
+	{
+		$this->GetDetailedRateBreakdown = new GetDetailedRateBreakdown($GetDetailedRateBreakdown);
+		return $this;
+	}
 }

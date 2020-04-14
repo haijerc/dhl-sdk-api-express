@@ -91,6 +91,10 @@ class RateRequestMapper
             $specialServicesList[] = $insuranceService;
         }
 
+	    if ($rateRequest->getShipmentDetails()->isDetailedPriceBreakdownRequested()) {
+		    $requestedShipment->setGetDetailedRateBreakdown(true);
+	    }
+
         if (!empty($specialServicesList)) {
             $specialServices = new SpecialServices($specialServicesList);
             $requestedShipment->setSpecialServices($specialServices);

@@ -96,6 +96,13 @@ class ShipmentDetails implements ShipmentDetailsInterface
      */
     private $nextBusinessDayIndicator;
 
+	/**
+	 * display additional price calculation information in charges response
+	 *
+	 * @var bool
+	 */
+	private $isDetailedPriceBreakdownRequested;
+
     /**
      * Constructor.
      *
@@ -105,6 +112,7 @@ class ShipmentDetails implements ShipmentDetailsInterface
      * @param \DateTime $readyAtTimestamp The ship time
      * @param bool $requestValueAddedServices If the Rate Response should contain the value added services
      * @param bool $nextBusinessDayIndicator
+     * @param bool $isDetailedPriceBreakdownRequested
      */
     public function __construct(
         $unscheduledPickup,
@@ -112,7 +120,8 @@ class ShipmentDetails implements ShipmentDetailsInterface
         $contentType,
         $readyAtTimestamp,
         $requestValueAddedServices,
-        $nextBusinessDayIndicator
+        $nextBusinessDayIndicator,
+	    $isDetailedPriceBreakdownRequested
     ) {
         $this->unscheduledPickup = $unscheduledPickup;
         $this->termsOfTrade = $termsOfTrade;
@@ -120,6 +129,7 @@ class ShipmentDetails implements ShipmentDetailsInterface
         $this->readyAtTimestamp = $readyAtTimestamp;
         $this->requestValueAddedServices = $requestValueAddedServices;
         $this->nextBusinessDayIndicator = $nextBusinessDayIndicator;
+	    $this->isDetailedPriceBreakdownRequested = $isDetailedPriceBreakdownRequested;
     }
 
     public function isUnscheduledPickup()
@@ -156,4 +166,9 @@ class ShipmentDetails implements ShipmentDetailsInterface
     {
         return (bool)$this->nextBusinessDayIndicator;
     }
+
+	public function isDetailedPriceBreakdownRequested()
+	{
+		return (bool)$this->isDetailedPriceBreakdownRequested;
+	}
 }

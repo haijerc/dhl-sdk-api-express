@@ -62,4 +62,11 @@ interface ShipmentDetailsInterface
      * @return bool
      */
     public function isNextBusinessDayIndicator();
+
+	/**
+	 * Returns detailed surcharge price breakdown
+	 *
+	 * @return bool
+	 */
+	public function isDetailedPriceBreakdownRequested();
 }
