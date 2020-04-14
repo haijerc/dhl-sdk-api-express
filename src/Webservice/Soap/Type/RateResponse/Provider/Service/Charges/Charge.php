@@ -4,6 +4,8 @@
  */
 namespace Dhl\Express\Webservice\Soap\Type\RateResponse\Provider\Service\Charges;
 
+use Dhl\Express\Webservice\Soap\Type\RateResponse\Provider\Service\Charges\ChargeBreakdown\ChargeBreakdown;
+
 /**
  * The charge section.
  *
@@ -55,6 +57,11 @@ class Charge
         return $this->ChargeType;
     }
 
+	/**
+	 * @var null|ChargeBreakdown
+	 */
+	private $ChargeBreakdown;
+
     /**
      * Returns the charge amount.
      *
@@ -64,4 +71,12 @@ class Charge
     {
         return (float) $this->ChargeAmount;
     }
+
+	/**
+	 * @return ChargeBreakdown|null
+	 */
+	public function getChargeBreakdown()
+	{
+		return $this->ChargeBreakdown;
+	}
 }
