@@ -32,6 +32,7 @@ class ClassMap
             'docTypeRef_TotalNetType'      => Type\RateResponse\Provider\Service\TotalNet::class,
             'docTypeRef_ChargesType'       => Type\RateResponse\Provider\Service\Charges::class,
             'docTypeRef_ChargeType'        => Type\RateResponse\Provider\Service\Charges\Charge::class,
+            'ChargeBreakdown'              => Type\RateResponse\Provider\Service\Charges\ChargeBreakdown\ChargeBreakdown::class,
 
             // createShipmentRequest response
             'docTypeRef_NotificationType2'   => Type\Common\Notification::class,
