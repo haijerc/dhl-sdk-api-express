@@ -73,7 +73,7 @@ interface ShipmentDetailsInterface
     /**
      * Returns the customs value.
      *
-     * @return float
+     * @return float|null
      */
     public function getCustomsValue();
 

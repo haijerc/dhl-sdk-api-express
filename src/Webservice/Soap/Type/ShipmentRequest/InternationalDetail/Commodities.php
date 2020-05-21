@@ -209,13 +209,16 @@ class Commodities
     /**
      * Sets the customs value.
      *
-     * @param float $customsValue The customs value
+     * @param float|null $customsValue The customs value
      *
      * @return self
      */
     public function setCustomsValue($customsValue)
     {
-        $this->CustomsValue = new CustomsValue($customsValue);
+	    if (!is_null($customsValue)) {
+		    $this->CustomsValue = new CustomsValue($customsValue);
+	    }
+	    
         return $this;
     }
 

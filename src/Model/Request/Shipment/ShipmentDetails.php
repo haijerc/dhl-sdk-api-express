@@ -116,7 +116,7 @@ class ShipmentDetails implements ShipmentDetailsInterface
     /**
      * The customs value.
      *
-     * @var float
+     * @var float|null
      */
     private $customsValue;
 
@@ -147,7 +147,7 @@ class ShipmentDetails implements ShipmentDetailsInterface
 	 * @param int       $numberOfPieces
 	 * @param string    $currencyCode
 	 * @param string    $description
-	 * @param float     $customsValue
+	 * @param float|null     $customsValue
 	 * @param string    $serviceType
 	 * @param string    $specialPickupInstructions
 	 * @param string    $paperlessDocument
