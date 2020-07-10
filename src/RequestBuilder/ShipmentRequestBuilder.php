@@ -252,13 +252,13 @@ class ShipmentRequestBuilder implements ShipmentRequestBuilderInterface
     }
 
     /**
-     * @param $encodedString
+     * @param $documentString
      *
      * @return ShipmentRequestBuilder
      */
-    public function setPaperlessBase64EncodedString($encodedString)
+    public function setPaperlessDocumentString($documentString)
     {
-        $this->data['paperlessDocument'] = $encodedString;
+        $this->data['paperlessDocument'] = $documentString;
 
         return $this;
     }

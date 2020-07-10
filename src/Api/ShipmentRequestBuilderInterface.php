@@ -210,7 +210,16 @@ interface ShipmentRequestBuilderInterface
      */
     public function setDryIce($unCode, $weight);
 
-    /**
+	/**
+	 * @param $documentString
+	 *                       
+	 * @return ShipmentRequestBuilderInterface
+	 */
+	public function setPaperlessDocumentString($documentString);
+
+
+
+	/**
      * Builds the shipment request instance.
      *
      * @return ShipmentRequestInterface
