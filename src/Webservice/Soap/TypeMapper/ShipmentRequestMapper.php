@@ -174,6 +174,12 @@ class ShipmentRequestMapper
             $specialServicesList[] = $insuranceService;
         }
 
+        if ($request->getDutiesTaxesPaid())
+        {
+            $dtpService = new Service(ServiceType::TYPE_DUTIES_TAXES_PAID);
+            $specialServicesList[] = $dtpService;
+        }
+        
         if ($shipmentInfo->getPaperlessTradeEnabled()) {
 	        $paperlessService = new Service(ServiceType::TYPE_PAPERLESS);
 	        $specialServicesList[] = $paperlessService;

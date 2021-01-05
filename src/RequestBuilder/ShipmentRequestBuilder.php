@@ -354,6 +354,11 @@ class ShipmentRequestBuilder implements ShipmentRequestBuilderInterface
         return $this;
     }
 
+    public function setDutiesTaxesPaid($dutiesTaxesPaid)
+    {
+        $this->data["dutiesTaxesPaid"] = $dutiesTaxesPaid;
+    }
+    
     public function build()
     {
         // Build shipment details
@@ -434,6 +439,11 @@ class ShipmentRequestBuilder implements ShipmentRequestBuilderInterface
             );
 
             $request->setInsurance($insurance);
+        }
+        
+        if (isset($this->data['dutiesTaxesPaid']))
+        {
+            $request->setDutiesTaxesPaid($data['dutiesTaxesPaid']);
         }
 
         // Build dry ice

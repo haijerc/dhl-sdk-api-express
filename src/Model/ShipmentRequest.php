@@ -57,6 +57,11 @@ class ShipmentRequest implements ShipmentRequestInterface
     private $insurance;
 
     /**
+     * @var null|bool
+     */
+    private $dutiesTaxesPaid;
+    
+    /**
      * @var null|DryIceInterface
      */
     private $dryIce;
@@ -123,6 +128,11 @@ class ShipmentRequest implements ShipmentRequestInterface
     {
         return $this->dryIce;
     }
+    
+    public function getDutiesTaxesPaid()
+    {
+        return $this->dutiesTaxesPaid;
+    }
 
     /**
      * Sets the billing account number.
@@ -162,6 +172,20 @@ class ShipmentRequest implements ShipmentRequestInterface
     public function setDryIce(DryIceInterface $dryIce)
     {
         $this->dryIce = $dryIce;
+
+        return $this;
+    }
+    
+    /**
+     * Sets the DutiesTaxesPaid value.
+     *
+     * @param bool $dutiesTaxesPaid Duties and taxes paid
+     *
+     * @return ShipmentRequest
+     */
+    public function setDutiesTaxesPaid(bool $dutiesTaxesPaid)
+    {
+        $this->dutiesTaxesPaid = $dutiesTaxesPaid;
 
         return $this;
     }

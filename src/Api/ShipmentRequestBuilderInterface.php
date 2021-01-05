@@ -217,7 +217,12 @@ interface ShipmentRequestBuilderInterface
 	 */
 	public function setPaperlessDocumentString($documentString);
 
-
+	/**
+	 * @param $dutiesTaxesPaid
+	 *                       
+	 * @return ShipmentRequestBuilderInterface
+	 */
+	public function setDutiesTaxesPaid($dutiesTaxesPaid);
 
 	/**
      * Builds the shipment request instance.

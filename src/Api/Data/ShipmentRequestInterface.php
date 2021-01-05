@@ -40,6 +40,11 @@ interface ShipmentRequestInterface
     public function getBillingAccountNumber();
 
     /**
+     * @return bool
+     */
+    public function getDutiesTaxesPaid();
+
+    /**
      * @return null|InsuranceInterface
      */
     public function getInsurance();
