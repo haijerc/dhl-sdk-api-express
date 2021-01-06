@@ -443,7 +443,7 @@ class ShipmentRequestBuilder implements ShipmentRequestBuilderInterface
         
         if (isset($this->data['dutiesTaxesPaid']))
         {
-            $request->setDutiesTaxesPaid($data['dutiesTaxesPaid']);
+            $request->setDutiesTaxesPaid($this->data['dutiesTaxesPaid']);
         }
 
         // Build dry ice
